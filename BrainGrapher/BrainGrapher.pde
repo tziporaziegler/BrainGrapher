@@ -27,15 +27,15 @@ void setup() {
   size(1024, 768);
   frameRate(60);
   smooth();
-  surface.setTitle("Processing Brain Grapher");  
+  surface.setTitle("Processing Brain Grapher");
 
   // Set up serial connection
   println("Find your Arduino in the list below, note its [index]:\n");
-  
+
   for (int i = 0; i < Serial.list().length; i++) {
     println("[" + i + "] " + Serial.list()[i]);
   }
-  
+
   // Put the index found above here:
   serial = new Serial(this, Serial.list()[5], 9600);
 
@@ -43,11 +43,11 @@ void setup() {
 
   // Set up the ControlP5 knobs and dials
   controlP5 = new ControlP5(this);
-  
+
   controlP5.setColorValueLabel(color(0));
-  controlP5.setColorCaptionLabel(color(0)); 
+  controlP5.setColorCaptionLabel(color(0));
   controlP5.setColorBackground(color(0));
-  controlP5.disableShortcuts(); 
+  controlP5.disableShortcuts();
   controlP5.setMouseWheelRotation(0);
   controlP5.setMoveable(false);
 
@@ -118,11 +118,11 @@ void draw() {
 void serialEvent(Serial p) {
   // Split incoming packet on commas
   // See https://github.com/kitschpatrol/Arduino-Brain-Library/blob/master/README for information on the CSV packet format
-  
+
   String incomingString = p.readString().trim();
   print("Received string over serial: ");
-  println(incomingString);  
-  
+  println(incomingString);
+
   String[] incomingValues = split(incomingString, ',');
 
   // Verify that the packet looks legit
@@ -131,11 +131,11 @@ void serialEvent(Serial p) {
 
     // Wait till the third packet or so to start recording to avoid initialization garbage.
     if (packetCount > 3) {
-      
+
       for (int i = 0; i < incomingValues.length; i++) {
         String stringValue = incomingValues[i].trim();
 
-      int newValue = Integer.parseInt(stringValue);
+        int newValue = Integer.parseInt(stringValue);
 
         // Zero the EEG power values if we don't have a signal.
         // Can be useful to leave them in for development.
@@ -146,14 +146,14 @@ void serialEvent(Serial p) {
         channels[i].addDataPoint(newValue);
       }
     }
-  } 
+  }
 }
 
 
 // Utilities
 
 // Extend Processing's built-in map() function to support the Long datatype
-long mapLong(long x, long in_min, long in_max, long out_min, long out_max) { 
+long mapLong(long x, long in_min, long in_max, long out_min, long out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 

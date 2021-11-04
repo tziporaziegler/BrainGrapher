@@ -32,10 +32,8 @@ class Channel {
   Point getLatestPoint() {
     if (points.size() > 0) {
       return (Point)points.get(points.size() - 1);
-    }
-    else {
+    } else {
       return new Point(0, 0);
     }
   }
 }
-

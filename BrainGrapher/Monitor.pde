@@ -1,10 +1,10 @@
 class Monitor {
-  // View class showing a bar-graph of each channel's 
+  // View class showing a bar-graph of each channel's
   // One instance per EEG channel.
 
   int x, y, w, h, currentValue, targetValue, backgroundColor;
   Channel sourceChannel;
-  CheckBox showGraph;   
+  CheckBox showGraph;
   Textlabel label;
   Toggle toggle;
 
@@ -26,7 +26,7 @@ class Monitor {
     showGraph.setColorBackground(color(0));
 
     toggle = showGraph.getItem(0);
-    toggle.setLabel("GRAPH"); 
+    toggle.setLabel("GRAPH");
 
     label = new Textlabel(controlP5, sourceChannel.name.toUpperCase(), x + 12, y + 15);
     label.setColorValue(0);
@@ -55,9 +55,9 @@ class Monitor {
       Point targetPoint = (Point)sourceChannel.points.get(sourceChannel.points.size() - 1);
       targetValue = round(map(targetPoint.value, sourceChannel.minValue, sourceChannel.maxValue, 0, h));
 
-      if ((scaleMode == "Global") && sourceChannel.allowGlobal) {                   
+      if ((scaleMode == "Global") && sourceChannel.allowGlobal) {
         targetValue = (int)map(targetPoint.value, 0, globalMax, 0, h);
-      } 
+      }
 
       // Calculate the new position on the way to the target with easing
       currentValue = currentValue + round(((float)(targetValue - currentValue) * .08));
@@ -70,7 +70,7 @@ class Monitor {
 
     // Draw the checkbox matte
     noStroke();
-    fill(240, 150);     
+    fill(240, 150);
     rect(10, 10, w - 20, 40);
 
     popMatrix();

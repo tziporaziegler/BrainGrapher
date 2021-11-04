@@ -1,5 +1,5 @@
 class Point {
-  // Value object class to store time / value tuple. 
+  // Value object class to store time / value tuple.
   // One instance per data point per channel.
   long time;
   int value;

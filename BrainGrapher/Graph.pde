@@ -23,7 +23,7 @@ class Graph {
     scrollGrid = false;
 
     originalW = w;
-    originalX = x;    
+    originalX = x;
 
     // Set up GUI controls
     pixelSecondsSlider = controlP5.addSlider("PIXELS PER SECOND", 10, width, 50, 16, 16, 100, 10);
@@ -35,21 +35,21 @@ class Graph {
     renderModeRadio.setColorForeground(color(255));
     renderModeRadio.setColorActive(color(0));
     renderModeRadio.setColorBackground(color(180));
-    renderModeRadio.setSpacingRow(4);    
+    renderModeRadio.setSpacingRow(4);
     renderModeRadio.addItem("Lines", 1);
     renderModeRadio.addItem("Curves", 2);
     renderModeRadio.addItem("Shaded", 3);
     renderModeRadio.addItem("Triangles", 4);
-                
+
     renderModeRadio.activate(0);
 
     scaleRadio = controlP5.addRadioButton("SCALE MODE", 104, 36);
     scaleRadio.setColorForeground(color(255));
     scaleRadio.setColorActive(color(0));
     scaleRadio.setColorBackground(color(180));
-    scaleRadio.setSpacingRow(4);    
+    scaleRadio.setSpacingRow(4);
     scaleRadio.addItem("Local Maximum", 1);
-    scaleRadio.addItem("Global Maximum", 2);        
+    scaleRadio.addItem("Global Maximum", 2);
     scaleRadio.activate(0);
   }
 
@@ -85,7 +85,7 @@ class Graph {
 
     // Smooth drawing kludge
     w = originalW;
-    x = originalX;    
+    x = originalX;
 
     w += (pixelsPerSecond * 2);
     x -= pixelsPerSecond;
@@ -112,10 +112,9 @@ class Graph {
     stroke(255);
 
     if (scrollGrid) {
-      // Start from the first whole second and work right           
+      // Start from the first whole second and work right
       gridTime = (rightTime / (long)(1000 * gridSeconds)) * (long)(1000 * gridSeconds);
-    }
-    else {
+    } else {
       gridTime = rightTime;
     }
 
@@ -128,13 +127,13 @@ class Graph {
     // Draw square horizontal grid for now
     int gridY = h;
     while (gridY >= 0) {
-      gridY -= pixelsPerSecond * gridSeconds; 
+      gridY -= pixelsPerSecond * gridSeconds;
       line(0, gridY, w, gridY);
     }
 
     // Draw each channel
-    noFill();               
-    if (renderMode == "Shaded" || renderMode == "Triangles") noStroke();        
+    noFill();
+    if (renderMode == "Shaded" || renderMode == "Triangles") noStroke();
     if (renderMode == "Curves" || renderMode == "Lines") strokeWeight(2);
 
     for (int i = 0; i < channels.length; i++) {
@@ -151,8 +150,7 @@ class Graph {
 
         if (renderMode == "Triangles") {
           beginShape(TRIANGLES);
-        } 
-        else {
+        } else {
           beginShape();
         }
 
@@ -168,18 +166,16 @@ class Graph {
             int pointY = 0;
 
             if ((scaleMode == "Global") && (i > 2)) {
-              // Global scale                   
+              // Global scale
               pointY = (int)map(thisPoint.value, 0, globalMax, h, 0);
-            }
-            else {
+            } else {
               // Local scale
               pointY = (int)map(thisPoint.value, thisChannel.minValue, thisChannel.maxValue, h, 0);
             }
 
             if (renderMode == "Curves") {
               curveVertex(pointX, pointY);
-            }
-            else {
+            } else {
               vertex(pointX, pointY);
             }
           }
